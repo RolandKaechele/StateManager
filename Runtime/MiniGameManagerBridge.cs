@@ -52,9 +52,9 @@ namespace StateManager.Runtime
             }
         }
 
-        private void OnStarted(string _)           => _state?.PushState(AppState.MiniGame);
-        private void OnCompleted(string _, object _2) => _state?.PopState();
-        private void OnAborted(string _)            => _state?.PopState();
+        private void OnStarted(string _)       => _state?.PushState(AppState.MiniGame);
+        private void OnCompleted(MiniGameResult _) => _state?.PopState();
+        private void OnAborted(string _)         => _state?.PopState();
     }
 }
 #else

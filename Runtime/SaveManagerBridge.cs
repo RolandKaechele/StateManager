@@ -55,13 +55,13 @@ namespace StateManager.Runtime
         {
             if (_save == null) return;
             var value = next == AppState.Custom ? $"Custom:{_state.CustomStateId}" : next.ToString();
-            _save.SetCustomData(stateKey, value);
+            _save.SetCustom(stateKey, value);
         }
 
         private void OnSaveLoaded(int slot)
         {
             if (_state == null || _save == null) return;
-            var value = _save.GetCustomData(stateKey);
+            var value = _save.GetCustom(stateKey);
             if (string.IsNullOrEmpty(value)) return;
 
             if (value.StartsWith("Custom:"))

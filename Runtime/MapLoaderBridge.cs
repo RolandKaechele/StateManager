@@ -36,8 +36,8 @@ namespace StateManager.Runtime
         {
             if (_mlf != null)
             {
-                _mlf.OnLoadStarted += OnLoadStarted;
-                _mlf.OnMapLoaded   += OnMapLoaded;
+                _mlf.OnChapterChanged += OnChapterChanged;
+                _mlf.OnMapLoaded      += OnMapLoaded;
             }
         }
 
@@ -45,13 +45,13 @@ namespace StateManager.Runtime
         {
             if (_mlf != null)
             {
-                _mlf.OnLoadStarted -= OnLoadStarted;
-                _mlf.OnMapLoaded   -= OnMapLoaded;
+                _mlf.OnChapterChanged -= OnChapterChanged;
+                _mlf.OnMapLoaded      -= OnMapLoaded;
             }
         }
 
-        private void OnLoadStarted(string _) => _state?.PushState(AppState.Loading);
-        private void OnMapLoaded(string _)   => _state?.PopState();
+        private void OnChapterChanged(int _, int _2) => _state?.PushState(AppState.Loading);
+        private void OnMapLoaded(MapData _)          => _state?.PopState();
     }
 }
 #else
