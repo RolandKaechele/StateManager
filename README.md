@@ -21,6 +21,7 @@ Supports custom JSON-defined states for modding and full optional integration wi
 - **SaveManager integration** — persist current state in save data; optionally restore on load (activated via `STATEMANAGER_SM`)
 - **EventManager re-broadcast** — EventManager can re-broadcast state events as GameEvents (activated via `EVENTMANAGER_STM`)
 - **Custom Inspector** — live state display, stack depth, and one-click transition controls in Play Mode
+- **Odin Inspector integration** — `SerializedMonoBehaviour` base for full Inspector serialization of complex types; runtime-display fields marked `[ReadOnly]` in Play Mode (activated via `ODIN_INSPECTOR`)
 
 
 ## Installation
@@ -141,6 +142,7 @@ Enable the integrations you want in **Project Settings → Player → Scripting 
 | `STATEMANAGER_EM` | EventManager | Fire state.* events |
 | `STATEMANAGER_SM` | SaveManager | Persist state in save |
 | `EVENTMANAGER_STM` | EventManager + StateManager | EventManager re-broadcasts state events |
+| `ODIN_INSPECTOR` | Odin Inspector (Asset Store) | `SerializedMonoBehaviour`; `[ReadOnly]` on runtime fields |
 
 
 ## JSON / Modding

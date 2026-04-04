@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+#if ODIN_INSPECTOR
+using Sirenix.OdinInspector;
+#endif
 
 namespace StateManager.Runtime
 {
@@ -34,7 +37,11 @@ namespace StateManager.Runtime
     /// </summary>
     [AddComponentMenu("StateManager/State Manager")]
     [DisallowMultipleComponent]
+#if ODIN_INSPECTOR
+    public class StateManager : SerializedMonoBehaviour
+#else
     public class StateManager : MonoBehaviour
+#endif
     {
         // ─── Inspector ───────────────────────────────────────────────────────────
 
