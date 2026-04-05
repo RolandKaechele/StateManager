@@ -19,6 +19,7 @@ Supports custom JSON-defined states for modding and full optional integration wi
 - **MapLoaderFramework integration** — auto-push `Loading` state during map loads and pop on loaded (activated via `STATEMANAGER_MLF`)
 - **EventManager integration** — broadcast `state.changed`, `state.pushed`, `state.popped` events (activated via `STATEMANAGER_EM`)
 - **SaveManager integration** — persist current state in save data; optionally restore on load (activated via `STATEMANAGER_SM`)
+- **LoadScreenManager integration** — `StateManagerLoadScreenBridge` in LoadScreenManager shows the load screen when `AppState.Loading` is pushed and hides it when popped; optionally bidirectional (activated via `LOADSCREENMANAGER_SM` in the LoadScreenManager module)
 - **EventManager re-broadcast** — EventManager can re-broadcast state events as GameEvents (activated via `EVENTMANAGER_STM`)
 - **Custom Inspector** — live state display, stack depth, and one-click transition controls in Play Mode
 - **Odin Inspector integration** — `SerializedMonoBehaviour` base for full Inspector serialization of complex types; runtime-display fields marked `[ReadOnly]` in Play Mode (activated via `ODIN_INSPECTOR`)
