@@ -144,6 +144,8 @@ Enable the integrations you want in **Project Settings → Player → Scripting 
 | `EVENTMANAGER_STM` | EventManager + StateManager | EventManager re-broadcasts state events |
 | `ODIN_INSPECTOR` | Odin Inspector (Asset Store) | `SerializedMonoBehaviour`; `[ReadOnly]` on runtime fields |
 
+> **AiManager** and **EnemyManager** also listen to state changes and freeze AI agents / pause spawning during `Cutscene`, `Dialogue`, `Paused`, and `MiniGame` states (activated via `AIMANAGER_STM` and `ENEMYMANAGER_STM` defines on the respective manager sides).
+
 
 ## JSON / Modding
 
