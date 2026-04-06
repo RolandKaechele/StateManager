@@ -1,17 +1,27 @@
 // postinstall.js — StateManager
-// Creates required runtime folders and optionally copies example files.
+// Creates required folders and optionally copies example files.
 
-const fs   = require('fs');
-const path = require('path');
+const fs       = require('fs');
+const path     = require('path');
 const readline = require('readline');
 
-const assetsDir  = path.resolve(__dirname, '../');
+const assetsDir   = path.resolve(__dirname, '../');
 const examplesDir = path.resolve(__dirname, 'Examples');
 
-// No additional folders required at runtime; StreamingAssets states.json is optional.
-console.log('StateManager postinstall: nothing to create.');
+const folders = [
+  'StreamingAssets',
+];
 
-// Copy example files with overwrite prompt
+folders.forEach(folder => {
+  const fullPath = path.join(assetsDir, folder);
+  if (!fs.existsSync(fullPath)) {
+    fs.mkdirSync(fullPath, { recursive: true });
+    console.log(`Created folder: ${fullPath}`);
+  } else {
+    console.log(`Folder already exists: ${fullPath}`);
+  }
+});
+
 function copyFileWithPrompt(src, dest, rl, cb) {
   if (fs.existsSync(dest)) {
     rl.question(`File ${dest} exists. Overwrite? (y/N): `, answer => {
@@ -46,25 +56,25 @@ function copyTemplates() {
     console.log('No Examples directory found. Skipping template copy.');
     return;
   }
-
-  const files = walkDir(examplesDir);
-  if (files.length === 0) {
-    console.log('No example files found.');
-    return;
-  }
-
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-  let i = 0;
-
-  function next() {
-    if (i >= files.length) { rl.close(); return; }
-    const { relPath, absPath } = files[i++];
-    const dest = path.join(assetsDir, relPath);
-    const destDir = path.dirname(dest);
-    if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
-    copyFileWithPrompt(absPath, dest, rl, next);
-  }
-  next();
+  rl.question('Copy example files from StateManager/Examples to your Assets folders? (y/N): ', answer => {
+    if (answer.trim().toLowerCase() !== 'y') {
+      console.log('Template copy skipped.');
+      rl.close();
+      return;
+    }
+    const files = walkDir(examplesDir);
+    let idx = 0;
+    function next() {
+      if (idx >= files.length) { console.log('Template copy complete.'); rl.close(); return; }
+      const { relPath, absPath } = files[idx++];
+      const dest    = path.join(assetsDir, relPath);
+      const destDir = path.dirname(dest);
+      if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
+      copyFileWithPrompt(absPath, dest, rl, next);
+    }
+    next();
+  });
 }
 
 copyTemplates();

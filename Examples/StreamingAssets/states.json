@@ -1,0 +1,28 @@
+{
+  "states": [
+    {
+      "id": "shop",
+      "displayName": "Shop",
+      "category": "ui",
+      "modal": true,
+      "pausePhysics": false,
+      "muteAudio": false
+    },
+    {
+      "id": "map_view",
+      "displayName": "Map View",
+      "category": "ui",
+      "modal": true,
+      "pausePhysics": false,
+      "muteAudio": false
+    },
+    {
+      "id": "cinematic",
+      "displayName": "Cinematic",
+      "category": "cutscene",
+      "modal": true,
+      "pausePhysics": true,
+      "muteAudio": false
+    }
+  ]
+}
