@@ -9,7 +9,7 @@ Supports custom JSON-defined states for modding and full optional integration wi
 
 - **Pushdown automaton stack** — `PushState()` / `PopState()` for modal states; `ChangeState()` to replace the whole stack
 - **Built-in states** — `Boot`, `TitleScreen`, `Loading`, `Gameplay`, `Paused`, `Dialogue`, `Cutscene`, `MiniGame`, `Inventory`, `Gallery`, `GameOver`, `Victory`, `Custom`
-- **Custom states / Modding** — define arbitrary string-keyed states from the Inspector or `StreamingAssets/states.json`; JSON entries are **merged by id**
+- **Custom states / Modding** — define arbitrary string-keyed states from the Inspector or `StreamingAssets/states/`; JSON entries are **merged by id**
 - **Events** — `OnStateChanged`, `OnStatePushed`, `OnStatePopped`, `OnCustomStateChanged` for reactive system design
 - **State queries** — `CurrentState`, `PreviousState`, `HasState(state)`, `IsCustomState(id)`, `StateStack`
 - **GameManager integration** — maps `GameState` enum values to `AppState` automatically (activated via `STATEMANAGER_GM`)
@@ -68,8 +68,8 @@ npm install
 | ----- | ------- | ----------- |
 | `initialState` | `Boot` | State set on Awake |
 | `customStates` | *(empty)* | Optional custom state definitions |
-| `loadFromJson` | `false` | Merge custom states from `states.json` |
-| `jsonPath` | `"states.json"` | Path relative to `StreamingAssets/` |
+| `loadFromJson` | `false` | Merge custom states from `states/` |
+| `jsonPath` | `"states/"` | Folder relative to `StreamingAssets/` containing `.json` files to merge. Falls back to single-file mode if the value points to an existing file. |
 | `maxStackDepth` | `16` | Maximum state stack depth |
 | `verboseLogging` | `false` | Log all transitions to Console |
 
@@ -150,7 +150,10 @@ Enable the integrations you want in **Project Settings → Player → Scripting 
 
 ## JSON / Modding
 
-Enable `loadFromJson` and place `states.json` in `StreamingAssets/`:
+Enable `loadFromJson` and place one or more `.json` files in `StreamingAssets/states/`.
+All `*.json` files in the folder are loaded and merged by `id` at startup.
+
+**Example:** `StreamingAssets/states/main.json`
 
 ```json
 {
@@ -180,9 +183,9 @@ Open via **JSON Editors → State Manager** in the Unity menu bar, or via the **
 
 | Action | Result |
 | ------ | ------ |
-| **Load** | Reads `StreamingAssets/states.json`; creates the file if missing |
+| **Load** | Reads all `*.json` from `StreamingAssets/states/`; creates the folder if missing |
 | **Edit** | Add / remove / reorder entries using the Inspector list |
-| **Save** | Writes back to `StreamingAssets/states.json` and calls `AssetDatabase.Refresh()` |
+| **Save** | Writes to `StreamingAssets/states/states.json` and calls `AssetDatabase.Refresh()` |
 
 With **ODIN_INSPECTOR** active, the list uses Odin's enhanced drawer (drag-to-sort, collapsible entries).
 

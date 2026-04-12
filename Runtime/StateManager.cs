@@ -56,8 +56,8 @@ namespace StateManager.Runtime
         [Tooltip("If true, merge custom state definitions from a JSON file in StreamingAssets/.")]
         [SerializeField] private bool loadFromJson = false;
 
-        [Tooltip("Path relative to StreamingAssets/ (e.g. 'states.json').")]
-        [SerializeField] private string jsonPath = "states.json";
+        [Tooltip("Path relative to StreamingAssets/ (e.g. 'states/' or 'states.json').")]
+        [SerializeField] private string jsonPath = "states/";
 
         [Header("Stack")]
         [Tooltip("Maximum depth of the state stack. Older entries are discarded.")]
@@ -258,16 +258,27 @@ namespace StateManager.Runtime
 
         private void LoadJsonDefinitions()
         {
-            var fullPath = Path.Combine(Application.streamingAssetsPath, jsonPath);
-            if (!File.Exists(fullPath))
+            string fullPath = Path.Combine(Application.streamingAssetsPath, jsonPath);
+            if (Directory.Exists(fullPath))
+            {
+                foreach (var file in Directory.GetFiles(fullPath, "*.json", SearchOption.TopDirectoryOnly))
+                    MergeStatesFromFile(file);
+            }
+            else if (File.Exists(fullPath))
+            {
+                MergeStatesFromFile(fullPath);
+            }
+            else
             {
                 Debug.LogWarning($"[StateManager] states.json not found at: {fullPath}");
-                return;
             }
+        }
 
+        private void MergeStatesFromFile(string path)
+        {
             try
             {
-                var manifest = JsonUtility.FromJson<CustomStateManifestJson>(File.ReadAllText(fullPath));
+                var manifest = JsonUtility.FromJson<CustomStateManifestJson>(File.ReadAllText(path));
                 if (manifest?.states == null) return;
 
                 foreach (var def in manifest.states)
@@ -275,11 +286,11 @@ namespace StateManager.Runtime
                         _customDefs[def.id] = def;
 
                 if (verboseLogging)
-                    Debug.Log($"[StateManager] Loaded {manifest.states.Length} custom state(s) from JSON.");
+                    Debug.Log($"[StateManager] Merged {manifest.states.Length} custom state(s) from {path}.");
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[StateManager] Failed to parse states.json: {ex.Message}");
+                Debug.LogError($"[StateManager] Failed to parse states JSON: {ex.Message}");
             }
         }
     }
