@@ -17,6 +17,9 @@ namespace StateManager.Editor
         {
             DrawDefaultInspector();
 
+            EditorGUILayout.Space(4);
+            if (GUILayout.Button("Open JSON Editor")) StateJsonEditorWindow.ShowWindow();
+
             var sm = (StateManager.Runtime.StateManager)target;
             if (!Application.isPlaying) return;
 
