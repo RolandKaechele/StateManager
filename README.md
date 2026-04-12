@@ -185,7 +185,7 @@ Open via **JSON Editors → State Manager** in the Unity menu bar, or via the **
 | ------ | ------ |
 | **Load** | Reads all `*.json` from `StreamingAssets/states/`; creates the folder if missing |
 | **Edit** | Add / remove / reorder entries using the Inspector list |
-| **Save** | Writes to `StreamingAssets/states/states.json` and calls `AssetDatabase.Refresh()` |
+| **Save** | Writes each entry as `<id>.json` to `StreamingAssets/states/`; entries without an `id` are skipped. Calls `AssetDatabase.Refresh()` |
 
 With **ODIN_INSPECTOR** active, the list uses Odin's enhanced drawer (drag-to-sort, collapsible entries).
 

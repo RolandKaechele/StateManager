@@ -18,8 +18,7 @@ namespace StateManager.Editor
     /// </summary>
     public class StateJsonEditorWindow : EditorWindow
     {
-        private const string JsonFolderName   = "states";
-        private const string JsonSaveFileName = "states.json";
+        private const string JsonFolderName = "states";
 
         private StateEditorBridge        _bridge;
         private UnityEditor.Editor       _bridgeEditor;
@@ -88,7 +87,6 @@ namespace StateManager.Editor
                 else
                 {
                     Directory.CreateDirectory(folderPath);
-                    File.WriteAllText(Path.Combine(folderPath, JsonSaveFileName), JsonUtility.ToJson(new StateEditorWrapper(), true));
                     AssetDatabase.Refresh();
                 }
                 _bridge.states = list;
@@ -105,11 +103,16 @@ namespace StateManager.Editor
             {
                 string folderPath = Path.Combine(Application.streamingAssetsPath, JsonFolderName);
                 if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
-                var w = new StateEditorWrapper { states = _bridge.states.ToArray() };
-                var path = Path.Combine(folderPath, JsonSaveFileName);
-                File.WriteAllText(path, JsonUtility.ToJson(w, true));
+                int saved = 0;
+                foreach (var entry in _bridge.states)
+                {
+                    if (string.IsNullOrEmpty(entry.id)) continue;
+                    var w = new StateEditorWrapper { states = new[] { entry } };
+                    File.WriteAllText(Path.Combine(folderPath, $"{entry.id}.json"), JsonUtility.ToJson(w, true));
+                    saved++;
+                }
                 AssetDatabase.Refresh();
-                _status = $"Saved {_bridge.states.Count} states to {JsonFolderName}/{JsonSaveFileName}.";
+                _status = $"Saved {saved} state file(s) to {JsonFolderName}/";
                 _statusError = false;
             }
             catch (Exception e) { _status = $"Save error: {e.Message}"; _statusError = true; }

@@ -1,0 +1,12 @@
+﻿{
+    "states":  [
+                   {
+                       "id":  "cinematic",
+                       "displayName":  "Cinematic",
+                       "category":  "cutscene",
+                       "modal":  true,
+                       "pausePhysics":  true,
+                       "muteAudio":  false
+                   }
+               ]
+}

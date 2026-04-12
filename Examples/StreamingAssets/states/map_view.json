@@ -1,0 +1,12 @@
+﻿{
+    "states":  [
+                   {
+                       "id":  "map_view",
+                       "displayName":  "Map View",
+                       "category":  "ui",
+                       "modal":  true,
+                       "pausePhysics":  false,
+                       "muteAudio":  false
+                   }
+               ]
+}

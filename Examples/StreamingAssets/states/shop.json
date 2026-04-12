@@ -1,0 +1,12 @@
+﻿{
+    "states":  [
+                   {
+                       "id":  "shop",
+                       "displayName":  "Shop",
+                       "category":  "ui",
+                       "modal":  true,
+                       "pausePhysics":  false,
+                       "muteAudio":  false
+                   }
+               ]
+}
