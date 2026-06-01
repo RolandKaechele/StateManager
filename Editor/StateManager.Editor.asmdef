@@ -1,8 +1,9 @@
-﻿{
+{
     "name": "StateManager.Editor",
     "rootNamespace": "StateManager.Editor",
     "references": [
-        "StateManager.Runtime"
+        "StateManager.Runtime",
+        "UnityEngine.UI"
     ],
     "includePlatforms": [
         "Editor"
